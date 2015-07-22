@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+./vendor/bin/wsdl2php -i ./wsdl/TransactionService.svc.wsdl -o ./src/Soap -n Alek\\PaymentGate\\RuRuPay\\Soap --noIncludes

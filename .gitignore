@@ -1,0 +1,5 @@
+.idea/
+vendor/
+
+test
+rurupay.config.php

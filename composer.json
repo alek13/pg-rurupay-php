@@ -1,0 +1,23 @@
+{
+  "name": "alek13/pg-rurupay-clint",
+  "description": "Client for Payment Gate RuRuPay",
+  "minimum-stability": "dev",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Alexander Chibrikin",
+      "email": "alek13.me@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.4"
+  },
+  "require-dev": {
+    "wsdl2phpgenerator/wsdl2phpgenerator": "~2"
+  },
+  "autoload": {
+    "psr-4": {
+      "Alek\\PaymentGate\\RuRuPay\\": "src"
+    }
+  }
+}

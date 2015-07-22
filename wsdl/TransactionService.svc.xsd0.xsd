@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema elementFormDefault="qualified" targetNamespace="http://ruru.ru/serviceprovider/"
+           xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://ruru.ru/serviceprovider/">
+    <xs:import schemaLocation="TransactionService.svc.xsd2.xsd"
+               namespace="http://schemas.datacontract.org/2004/07/RuRu.FrontEnd.ServiceProvider.Contract"/>
+    <xs:element name="PreInit">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" name="spTrnId" nillable="true" type="xs:string"/>
+                <xs:element minOccurs="0" name="spTrnDate" nillable="true" type="xs:string"/>
+                <xs:element minOccurs="0" name="phone" nillable="true" type="xs:string"/>
+                <xs:element minOccurs="0" name="info" nillable="true" type="xs:string"/>
+                <xs:element minOccurs="0" name="spAccount" nillable="true" type="xs:string"/>
+                <xs:element minOccurs="0" name="productId" type="xs:int"/>
+                <xs:element minOccurs="0" name="amount" type="xs:long"/>
+                <xs:element minOccurs="0" name="spId" type="xs:int"/>
+                <xs:element minOccurs="0" name="parameters" nillable="true" type="tns:ArrayOfParameter"/>
+                <xs:element minOccurs="0" name="signature" nillable="true" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="ArrayOfParameter">
+        <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="Parameter" nillable="true" type="tns:Parameter"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="ArrayOfParameter" nillable="true" type="tns:ArrayOfParameter"/>
+    <xs:complexType name="Parameter">
+        <xs:sequence>
+            <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="Value" nillable="true" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="Parameter" nillable="true" type="tns:Parameter"/>
+    <xs:element name="PreInitResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" name="PreInitResult" nillable="true" type="q1:PreInitResult"
+                            xmlns:q1="http://schemas.datacontract.org/2004/07/RuRu.FrontEnd.ServiceProvider.Contract"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Init">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" name="spTrnId" nillable="true" type="xs:string"/>
+                <xs:element minOccurs="0" name="spTrnDate" nillable="true" type="xs:string"/>
+                <xs:element minOccurs="0" name="phone" nillable="true" type="xs:string"/>
+                <xs:element minOccurs="0" name="info" nillable="true" type="xs:string"/>
+                <xs:element minOccurs="0" name="spAccount" nillable="true" type="xs:string"/>
+                <xs:element minOccurs="0" name="productId" type="xs:int"/>
+                <xs:element minOccurs="0" name="amount" nillable="true" type="xs:long"/>
+                <xs:element minOccurs="0" name="spId" type="xs:int"/>
+                <xs:element minOccurs="0" name="parameters" nillable="true" type="tns:ArrayOfParameter"/>
+                <xs:element minOccurs="0" name="trnId" nillable="true" type="xs:long"/>
+                <xs:element minOccurs="0" name="signature" nillable="true" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="InitResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" name="InitResult" nillable="true" type="tns:OperationResult"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="OperationResult">
+        <xs:sequence>
+            <xs:element minOccurs="0" name="ErrorCode" type="xs:int"/>
+            <xs:element minOccurs="0" name="Id" type="xs:long"/>
+            <xs:element minOccurs="0" name="Info" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="Signature" nillable="true" type="xs:string"/>
+            <xs:element minOccurs="0" name="TimeOut1" type="xs:int"/>
+            <xs:element minOccurs="0" name="TimeOut2" type="xs:int"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="OperationResult" nillable="true" type="tns:OperationResult"/>
+    <xs:element name="ReserveCallback">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" name="trnId" type="xs:long"/>
+                <xs:element minOccurs="0" name="spTrnId" nillable="true" type="xs:string"/>
+                <xs:element minOccurs="0" name="spTrnDate" nillable="true" type="xs:string"/>
+                <xs:element minOccurs="0" name="info" nillable="true" type="xs:string"/>
+                <xs:element minOccurs="0" name="amount" nillable="true" type="xs:long"/>
+                <xs:element minOccurs="0" name="spId" nillable="true" type="xs:int"/>
+                <xs:element minOccurs="0" name="result" type="xs:int"/>
+                <xs:element minOccurs="0" name="errorDescription" nillable="true" type="xs:string"/>
+                <xs:element minOccurs="0" name="signature" nillable="true" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="ReserveCallbackResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" name="ReserveCallbackResult" nillable="true" type="tns:OperationResult"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="PurchaseCallback">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" name="trnId" type="xs:long"/>
+                <xs:element minOccurs="0" name="spTrnId" nillable="true" type="xs:string"/>
+                <xs:element minOccurs="0" name="spTrnDate" nillable="true" type="xs:string"/>
+                <xs:element minOccurs="0" name="info" nillable="true" type="xs:string"/>
+                <xs:element minOccurs="0" name="amount" nillable="true" type="xs:long"/>
+                <xs:element minOccurs="0" name="spId" nillable="true" type="xs:int"/>
+                <xs:element minOccurs="0" name="result" type="xs:int"/>
+                <xs:element minOccurs="0" name="errorDescription" nillable="true" type="xs:string"/>
+                <xs:element minOccurs="0" name="signature" nillable="true" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="PurchaseCallbackResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" name="PurchaseCallbackResult" nillable="true" type="tns:OperationResult"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetTransactionStatus">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" name="trnId" type="xs:long"/>
+                <xs:element minOccurs="0" name="spId" type="xs:int"/>
+                <xs:element minOccurs="0" name="signature" nillable="true" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="GetTransactionStatusResponse">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element minOccurs="0" name="GetTransactionStatusResult" nillable="true" type="q2:TransactionStatus"
+                            xmlns:q2="http://schemas.datacontract.org/2004/07/RuRu.FrontEnd.ServiceProvider.Contract"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
