@@ -4,9 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "700757ee38bec8a66f70b432cac66917",
-    "packages": [],
-    "packages-dev": [
+    "hash": "31cf619450b7c3f8f4ad665039db5289",
+    "packages": [
         {
             "name": "colibri-fw/util",
             "version": "1.0",
@@ -42,7 +41,9 @@
             ],
             "description": "Colibri util component",
             "time": "2015-07-22 18:38:02"
-        },
+        }
+    ],
+    "packages-dev": [
         {
             "name": "psr/log",
             "version": "dev-master",
