@@ -51,15 +51,15 @@ class Client
     }
 
     /**
-     * @param string    $phone                 телефон покупателя
-     * @param int       $productId             id услуги (в RuRuPay)
-     * @param int       $amount                сумма в копейках
-     * @param string    $transactionId         id транзакции магазина (id счёта)
-     * @param \DateTime $transactionDate       дата платежа (в магазине)
-     * @param string    $account               номер счёта клиента в магазине
-     * @param string    $info                  информация, отправляемая клиенту в момент подтверждения списания
-     * @param array     $additionalParams      дополнительные параметры (не используется, Зарезервирова но для будущих
-     *                                         версий)
+     * @param string    $phone            телефон покупателя
+     * @param int       $productId        id услуги (в базе RuRuPay)
+     * @param int       $amount           сумма в копейках
+     * @param string    $transactionId    id транзакции в базе "нашего" магазина (id платежа)
+     * @param \DateTime $transactionDate  дата платежа (в "нашем" магазине)
+     * @param string    $account          номер счёта клиента в магазине
+     * @param string    $info             информация, отправляемая клиенту в момент подтверждения списания
+     * @param array     $additionalParams дополнительные параметры (не используется, Зарезервирова но для будущих
+     *                                    версий)
      *
      * @return Soap\PreInitResult
      */
@@ -103,12 +103,12 @@ class Client
 
     /**
      * @param string    $phone                 телефон покупателя
-     * @param int       $productId             id услуги (в RuRuPay)
+     * @param int       $productId             id услуги (в базе RuRuPay)
      * @param int       $amount                сумма в копейках
-     * @param int       $transactionExternalId id транзакции (в RuRuPay)
-     * @param string    $transactionId         id транзакции магазина (id платежа)
-     * @param \DateTime $transactionDate       дата платежа (в магазине)
-     * @param string    $account               номер счёта клиента в магазине
+     * @param int       $transactionExternalId id транзакции (в базе RuRuPay)
+     * @param string    $transactionId         id транзакции в базе "нашего" магазина (id платежа)
+     * @param \DateTime $transactionDate       дата платежа (в "нашем" магазине)
+     * @param string    $account               номер счёта клиента в "нашем" магазине
      * @param string    $info                  информация, отправляемая клиенту в момент подтверждения списания
      * @param array     $additionalParams      дополнительные параметры (не используется, Зарезервирова но для будущих
      *                                         версий)
@@ -249,8 +249,7 @@ class Client
      *
      * @return array
      */
-    private
-    static function buildAdditionalParams(array $additionalParams)
+    private static function buildAdditionalParams(array $additionalParams)
     {
         $params = [];
         foreach ($additionalParams as $name => $value) {

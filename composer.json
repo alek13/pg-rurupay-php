@@ -1,5 +1,5 @@
 {
-  "name": "alek13/pg-rurupay-clint",
+  "name": "alek13/pg-rurupay-client",
   "description": "Client for Payment Gate RuRuPay",
   "minimum-stability": "dev",
   "license": "MIT",
@@ -13,11 +13,15 @@
     "php": ">=5.4"
   },
   "require-dev": {
-    "wsdl2phpgenerator/wsdl2phpgenerator": "~2"
+    "wsdl2phpgenerator/wsdl2phpgenerator": "~2.0",
+    "colibri-fw/util": "~1.0"
   },
   "autoload": {
     "psr-4": {
       "Alek\\PaymentGate\\RuRuPay\\": "src"
     }
-  }
+  },
+  "bin": [
+    "bin/rurupay"
+  ]
 }

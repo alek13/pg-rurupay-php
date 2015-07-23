@@ -3,15 +3,13 @@ namespace Alek\PaymentGate\RuRuPay\Command\Client;
 
 use Alek\PaymentGate\RuRuPay\Command\Client;
 use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
 
 class Init extends Client
 {
     /**
      * Configures the current command.
      */
-    protected function configure()
+    protected function makeConfigure()
     {
         $this
             ->setDescription('< not implemented >')
@@ -26,26 +24,4 @@ class Init extends Client
             ->addArgument('additional_params', InputArgument::OPTIONAL | InputArgument::IS_ARRAY, '...')
         ;
     }
-
-    /**
-     * Executes the current command.
-     *
-     * @param InputInterface  $input  An InputInterface instance
-     * @param OutputInterface $output An OutputInterface instance
-     *
-     * @return null|int null or 0 if everything went fine, or an error code
-     *
-     * @throws \LogicException When this abstract method is not implemented
-     */
-    protected function execute(InputInterface $input, OutputInterface $output)
-    {
-        $arguments = $input->getArguments();
-        unset($arguments['command']);
-
-        var_dump($arguments);
-//        call_user_func_array([$this->client, 'init']);
-//        $result = $this->client->init();
-    }
-
-
 }

@@ -12,7 +12,7 @@ class Status extends Client
     /**
      * Configures the current command.
      */
-    protected function configure()
+    protected function makeConfigure()
     {
         $this
             ->setDescription('Retrieve the status of transaction')
@@ -41,7 +41,7 @@ class Status extends Client
      * @param TransactionStatus $result
      * @param OutputInterface   $output
      */
-    private function output(TransactionStatus $result, OutputInterface $output)
+    protected function output($result, OutputInterface $output)
     {
         $output->writeln("  <comment>ID:</comment> <info>$result->TransactionId</info>");
         $output->writeln("  <comment>Error:</comment> <info>$result->ErrorCode</info> $result->Description");

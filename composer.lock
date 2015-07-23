@@ -4,9 +4,45 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "be53cabd69e533bf368cd707d5143096",
+    "hash": "700757ee38bec8a66f70b432cac66917",
     "packages": [],
     "packages-dev": [
+        {
+            "name": "colibri-fw/util",
+            "version": "1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Colibri-FW/util.git",
+                "reference": "b1b2e0f7016fc8e24759b5649f8e03f573284df1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Colibri-FW/util/zipball/b1b2e0f7016fc8e24759b5649f8e03f573284df1",
+                "reference": "b1b2e0f7016fc8e24759b5649f8e03f573284df1",
+                "shasum": ""
+            },
+            "require": {
+                "php": "~5.3"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Colibri\\Util\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Alexander Chibrikin",
+                    "email": "alek13.me@gmail.com"
+                }
+            ],
+            "description": "Colibri util component",
+            "time": "2015-07-22 18:38:02"
+        },
         {
             "name": "psr/log",
             "version": "dev-master",
