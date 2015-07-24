@@ -10,7 +10,7 @@ class Client
     /**
      * By default get in-library saved WSDL`s
      */
-    const WSDL_DEFAULT_PATH = './wsdl/TransactionService.svc.wsdl';
+    const WSDL_DEFAULT_PATH = 'https://178.20.234.188/RuRu.FrontEnd.ServiceProvider2/TransactionService.svc?wsdl';
     /**
      * @var
      */
