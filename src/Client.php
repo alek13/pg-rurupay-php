@@ -1,6 +1,8 @@
 <?php
 namespace Alek\PaymentGate\RuRuPay;
 
+use Alek\PaymentGate\RuRuPay\Client\Exception;
+
 
 /**
  * Class Client
@@ -51,6 +53,14 @@ class Client
     }
 
     /**
+     * @return Signer
+     */
+    public function getSigner()
+    {
+        return $this->signer;
+    }
+
+    /**
      * @param string    $phone            телефон покупателя
      * @param int       $productId        id услуги (в базе RuRuPay)
      * @param int       $amount           сумма в копейках
@@ -62,6 +72,7 @@ class Client
      *                                    версий)
      *
      * @return Soap\PreInitResult
+     * @throws Exception
      */
     public function preInit($phone, $productId, $amount, $transactionId = null, \DateTime $transactionDate = null,
                             $account = null, $info = null, array $additionalParams = [])
@@ -97,6 +108,9 @@ class Client
 //            $result->Info,
 //            $result->TransactionId
 //        ]);
+        if ($result->ErrorCode) {
+            throw new Exception($result);
+        }
 
         return $result;
     }
@@ -114,6 +128,7 @@ class Client
      *                                         версий)
      *
      * @return Soap\OperationResult
+     * @throws Exception
      */
     public function init($phone, $productId, $amount, $transactionExternalId = null, $transactionId = null,
                          \DateTime $transactionDate = null,
@@ -125,24 +140,27 @@ class Client
             $transactionId, $transactionDate, $phone, $info, $account, $productId, $amount, $this->partnerId, $transactionExternalId,
         ]);
 
-        $result = $this->soapService->Init(
-            new Soap\Init(
-                $transactionId,
-                $transactionDate,
-                $phone,
-                $info,
-                $account,
-                $productId,
-                $amount,
-                $this->partnerId,
-                self::buildAdditionalParams($additionalParams),
-                $transactionExternalId,
-                $signature
-            )
-        )->InitResult;
 
+        $data = new Soap\Init(
+            $transactionId,
+            $transactionDate,
+            $phone,
+            $info,
+            $account,
+            $productId,
+            $amount,
+            $this->partnerId,
+            self::buildAdditionalParams($additionalParams),
+            $transactionExternalId,
+            $signature
+        );
+
+        $result = $this->soapService->Init($data)->InitResult;
 //        $this->signer->verify($result->Signature, [
 //        ]);
+        if ($result->ErrorCode) {
+            throw new Exception($result);
+        }
 
         return $result;
     }
@@ -157,6 +175,7 @@ class Client
      * @param int       $amount                сумма покупки в копейках Целое число
      *
      * @return Soap\OperationResult
+     * @throws Exception
      */
     public function reserveCallback($transactionExternalId, $result = 0, $errorDescription = 'success',
                                     $transactionId = null, $transactionDate = null, $info = null, $amount = null)
@@ -180,6 +199,11 @@ class Client
                 $signature
             )
         )->ReserveCallbackResult;
+//        $this->signer->verify($result->Signature, [
+//        ]);
+        if ($result->ErrorCode) {
+            throw new Exception($result);
+        }
 
         return $result;
     }
@@ -195,6 +219,7 @@ class Client
      * @param int       $amount                сумма покупки в копейках Целое число
      *
      * @return Soap\OperationResult
+     * @throws Exception
      */
     public function purchaseCallback($transactionExternalId, $result = 0, $errorDescription = 'success',
                                      $transactionId = null, $transactionDate = null, $info = null, $amount = null)
@@ -202,7 +227,7 @@ class Client
         $transactionDate = $transactionDate ? $transactionDate->format('Y-m-d H:i:s') : null;
 
         $signature = $this->signer->sign([
-            $transactionExternalId, $transactionId, $transactionDate, $info, $amount, $this->partnerId,
+            $transactionExternalId, $transactionId, $transactionDate, $info, $amount, $this->partnerId, $result, $errorDescription,
         ]);
 
         $result = $this->soapService->PurchaseCallback(
@@ -218,6 +243,11 @@ class Client
                 $signature
             )
         )->PurchaseCallbackResult;
+//        $this->signer->verify($result->Signature, [
+//        ]);
+        if ($result->ErrorCode) {
+            throw new Exception($result);
+        }
 
         return $result;
     }
@@ -226,6 +256,7 @@ class Client
      * @param int $transactionExternalId id транзакции (в RuRuPay)
      *
      * @return Soap\TransactionStatus
+     * @throws Exception
      */
     public function getTransactionStatus($transactionExternalId)
     {
@@ -240,9 +271,36 @@ class Client
                 $signature
             )
         )->GetTransactionStatusResult;
+//        $this->signer->verify($result->Signature, [
+//        ]);
+        if ($result->ErrorCode) {
+            throw new Exception($result);
+        }
 
         return $result;
     }
+
+//    public function cancel($transactionExternalId, $result = 0, $errorDescription = 'cancel',
+//                           $transactionId = null, $transactionDate = null, $info = null, $amount = null)
+//    {
+//        $transactionDate = $transactionDate ? $transactionDate->format('Y-m-d H:i:s') : null;
+//
+//        $signature = $this->signer->sign([
+//            $transactionExternalId, $transactionId, $transactionDate, $info, $amount, $this->partnerId, $result, $errorDescription,
+//        ]);
+//
+//        $this->soapService->Cancel(
+//            new Soap\...()
+//        );
+//
+////        $this->signer->verify($result->Signature, [
+////        ]);
+//        if ($result->ErrorCode) {
+//            throw new Exception($result);
+//        }
+//
+//        return $result;
+//    }
 
     /**
      * @param array $additionalParams
@@ -260,5 +318,13 @@ class Client
         }
 
         return $params;
+    }
+
+    /**
+     * @return Client\Callback\Handler\CancelInit|Client\Callback\Handler\CancelPayment|Client\Callback\Handler\Init|Client\Callback\Handler\Payment
+     */
+    public function callback()
+    {
+        return Client\Callback\Factory::create($this->signer);
     }
 }
