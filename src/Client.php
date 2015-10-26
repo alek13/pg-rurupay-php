@@ -273,9 +273,9 @@ class Client
         )->GetTransactionStatusResult;
 //        $this->signer->verify($result->Signature, [
 //        ]);
-        if ($result->ErrorCode) {
-            throw new Exception($result);
-        }
+//        if ($result->ErrorCode) {
+//            throw new Exception($result);
+//        }
 
         return $result;
     }

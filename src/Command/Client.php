@@ -24,7 +24,7 @@ abstract class Client extends Command
         parent::__construct();
 
         $config       = include('rurupay.config.php');
-        $this->client = new ServiceClient($config);
+        $this->client = new ServiceClient($config['api']);
     }
 
     /**
