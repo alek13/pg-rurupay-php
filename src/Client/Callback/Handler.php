@@ -69,7 +69,7 @@ abstract class Handler implements HandlerInterface
 
             $this->onFailure($this->input, $callbackException);
 
-            return Response\Error::fromException($callbackException)->render();
+            return Response\Error::fromException($callbackException, self::$signer)->render();
         }
     }
 

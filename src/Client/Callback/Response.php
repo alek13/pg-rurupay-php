@@ -74,9 +74,7 @@ abstract class Response
         if ($this->willCallback !== null) {
             $xml->appendWillCallback($this->willCallback);
         }
-        if (self::isSignatureNeeded()) {
-            $xml->appendSignature($this->calcSignature($bodyData));
-        }
+        $xml->appendSignature($this->calcSignature($bodyData));
         if ($this->willCallback === null || $this->willCallback === false) {
             $xml->appendResponseBody();
         }
@@ -112,14 +110,6 @@ abstract class Response
     }
 
     /**
-     * @return bool
-     */
-    private static function isSignatureNeeded()
-    {
-        return static::getClass() !== 'Error';
-    }
-
-    /**
      * @param Response\Body\Xml                                                                             $xml
      * @param Response\Data\Init|Response\Data\Payment|Response\Data\CancelInit|Response\Data\CancelPayment $bodyData
      */
@@ -137,11 +127,13 @@ abstract class Response
      */
     private function calcSignature($bodyData)
     {
-        $signatureParams         = [
+        $signatureParams = [
                 'ErrorCode'        => $this->errorCode,
                 'ErrorDescription' => $this->errorDescription,
             ] + (array)$bodyData;
-        $signatureParams['date'] = $bodyData->date->format('Y-m-d H:i:s');
+        if ($bodyData) {
+            $signatureParams['date'] = $bodyData->date->format('Y-m-d H:i:s');
+        }
 
         return $this->signer->sign($signatureParams);
     }
